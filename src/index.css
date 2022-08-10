@@ -1,0 +1,461 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  text-shadow: -5px 3px 14px rgb(0,0,0);
+  color: rgb(210, 210, 210);
+}
+
+body {
+  background: linear-gradient(0.25turn, hsl(0, 0%, 10%), hsl(0, 0%, 15%));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+/* Stopwatch and Timer */
+.stopwatch-timer-container {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+/* Stopwatch - Timer Switch */
+.timer-switch-container {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-52%, -100%);
+  margin-bottom: -20px;
+}
+
+label .btn-timer-switch-inner {
+  font-size: 36px;
+  color: rgb(210, 210, 210);
+  font-weight: 500;
+}
+
+.btn-timer-switch {
+  display: inline-block;
+  position: relative;
+  box-shadow: -3px 3px 15px 0px rgba(0,0,0,0.5);
+}
+
+.btn-timer-switch > label.btn-timer-switch-inner {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 400px;
+  height: 54px;
+  transition: all 0.3s ease;
+}
+
+.btn-timer-switch > label.btn-timer-switch-inner:before {
+  content: attr(data-on);
+  position: absolute;
+  font-weight: 500;
+  height: 54px;
+  width: 200px;
+  text-align: center;
+  padding-top: 4px;
+}
+  
+.btn-timer-switch > label.btn-timer-switch-inner:after {
+  content: attr(data-off);
+  height: 54px;
+  width: 200px;
+  padding-top: 4px;
+  position: absolute;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+  
+.btn-timer-switch input[type='checkbox'] {
+  cursor: pointer;
+  width: 400px;
+  height: 54px;
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.btn-timer-switch input[type='checkbox'] + label.btn-timer-switch-inner:after {
+  content: attr(data-on);
+  left: 200px;
+  background: rgb(65, 14, 10);
+  color: rgb(100, 100, 100);
+}
+
+.btn-timer-switch input[type='checkbox'] + label.btn-timer-switch-inner:before {
+  content: attr(data-off);
+  right: auto;
+  background: rgb(189, 14, 10);
+  color: rgb(210, 210, 210);
+  box-shadow: 5px -5px 30px 0px rgba(0,0,0,0.5) inset;
+}
+
+.btn-timer-switch input[type='checkbox']:checked + label.btn-timer-switch-inner:after {
+  content: attr(data-on);
+  background: rgb(189, 14, 10);
+  color: rgb(210, 210, 210);
+  box-shadow: 5px -5px 30px 0px rgba(0,0,0,0.5) inset;
+}
+
+.btn-timer-switch input[type='checkbox']:checked + label.btn-timer-switch-inner:before {
+  content: attr(data-off);
+  right: auto;
+  background: rgb(77, 14, 10);
+  color: rgb(100, 100, 100);
+}
+
+/* Time Inputs */
+.input-container {
+  display: inline-block;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-79%, -25%);
+}
+
+.input-container input[type='number'] {
+  width: 46px;
+  height: 36px;
+  text-align: left;
+  padding-left: 5px;
+  margin-left: 20px;
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  line-height: 36px;
+  text-shadow: -1px 1px 4px rgb(0,0,0);
+  border: none;
+  box-shadow: 5px -5px 25px 0px rgba(0,0,0,0.3) inset,
+              -3px 3px 15px 0px rgba(0,0,0,0.5);
+}
+
+.input-container input[type='number']:focus {
+  outline: none;
+  box-shadow: 1px -1px 10px 0px rgba(0,0,0,0.3) inset;
+}
+
+.input.hours {
+  background-color: rgb(252, 174, 30);
+}
+
+.input.minutes {
+  background-color: rgb(221, 87, 28);
+}
+
+.input.seconds {
+  background-color: rgb(189, 14, 10);
+}
+
+.submit-btn-container {
+  position: absolute;
+  display: inline-block;
+  top: 2%;
+}
+
+/* Time Output */
+.time-container {
+  display: block;
+  margin-bottom: 35px;
+}
+
+.time-container.stopwatch {
+  margin: -40px 0 -5px 0;
+}
+
+.time-container h1, h2 {
+  text-align: center;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.time-container.timer h1 {
+  margin-bottom: 5px;
+}
+
+span.hours {
+  color: rgb(252, 174, 30);
+}
+
+span.minutes {
+  color: rgb(221, 87, 28);
+}
+
+span.seconds-milliseconds {
+  color: rgb(189, 14, 10);
+}
+
+span.divider {
+  margin: 10px;
+  font-weight: 700;
+}
+
+/* Outer Clock */
+.outer-clock {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background-color: rgb(33, 33, 33);
+  border-radius: 50%;
+  box-shadow: -5px 5px 35px 0px rgba(0,0,0,0.5);
+}
+
+.outer-clock .numbers {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.inner-face {
+  position: absolute;
+  background-color: rgb(33, 46, 46);
+  border-radius: 1000px;
+}
+
+.inner-face.face1 {
+  width: 90%;
+  height: 90%;
+  left: 5%;
+  top: 5%;
+  z-index: 1;
+}
+
+.inner-face.face2 {
+  width: 86%;
+  height: 86%;
+  left: 7%;
+  top: 7%;
+  z-index: 2;
+}
+
+/* Clock */
+.clock {
+  width: 330px;
+  height: 330px;
+  background-color: rgb(33, 46, 46);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -165px 0px 0px -165px;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  width: 6px;
+  height: 49%;
+  border-radius: 10px 10px 0 0;
+  transform-origin: bottom;
+  transform: translateX(-50%) rotate(0);
+  box-shadow: 0px 0px 10px 3px rgba(0,0,0,.35);
+  z-index: 3;
+}
+
+.hand.hour {
+  background-color: rgb(252, 174, 30);
+}
+
+.hand.minute {
+  background-color: rgb(221, 87, 28);
+}
+
+.hand.second {
+  background-color: rgb(189, 14, 10);
+}
+
+.circle {
+  position: absolute;
+  bottom: 50%;
+  left: 45%;
+  width: 40px;
+  height: 33.3%;
+  background-color: rgb(33, 36, 36);
+  border-top-left-radius: 47%;
+  border-top-right-radius: 47%;
+  transform-origin: bottom;
+  transform: translateX(-50%) rotate(0);
+  text-shadow: rgb(255, 255, 255) 0px 0px 2px;
+  z-index: 3;
+}
+
+.circle div {
+  margin-top: 3.5px;
+  font-size: 16px;
+  color: white;
+  font-weight: 400;
+  text-align: center;
+}
+
+.marks {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  width: 1px;
+  height: 48%;
+  transform-origin: bottom;
+  z-index: 0;
+}
+
+.start {
+  position: absolute;
+  background-color: rgb(0, 0, 0);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 4;
+}
+
+.start.progress-bar-border {
+  background-color: rgb(37, 37, 37);
+  width: 170px;
+  height: 170px;
+}
+
+.start.progress-bar-container {
+  width: 150px;
+  height: 150px;
+  background-color: rgb(55, 55, 55);
+  box-shadow: 5px -5px 20px 0px rgba(0,0,0,.1) inset;
+}
+
+.progress-bar-container circle {
+  fill: none;
+  stroke: rgb(2, 138, 15);
+  stroke-width: 20px;
+  stroke-dasharray: 406;
+}
+
+.btn-bg {
+  background-color: rgb(55, 55, 55);
+  width: 110px;
+  height: 110px;
+}
+
+/* Toggle Buttons */
+.checkbox {
+  display : none;
+}
+
+.toggle-btn {
+  width: 75px;
+  height: 75px;
+  border: 7px solid rgb(37, 37, 37);
+  border-radius: 50%;
+  box-shadow: 5px -5px 30px 0px rgba(0,0,0,0.5) inset,
+              -3px 3px 15px 0px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sound-toggle-btn {
+  background: url(./images/sound_off.png) no-repeat;
+  background-size: 70% 70%;
+  background-position: center;
+  display : inline-block;
+  width: 75px;
+  height: 75px;
+}
+
+.sound-checkbox:checked + .sound-toggle-btn {
+  background: url(./images/sound_on.png) no-repeat;
+  background-size: 70% 70%;
+  background-position: center;
+}
+
+.start-toggle-btn {
+  background: url(./images/start.png) no-repeat;
+  background-size: 70% 70%;
+  background-position: center;
+  display : inline-block;
+  width: 110px;
+  height: 110px;
+  border: 10px solid rgb(37, 37, 37);
+  border-radius: 50%;
+  box-shadow: 5px -5px 30px 0px rgba(0,0,0,0.5) inset;
+  cursor: pointer;
+}
+         
+.start-checkbox:checked + .start-toggle-btn {
+  background: url(./images/pause.png) no-repeat;
+  background-size: 70% 70%;
+  background-position: center;
+}
+
+/* Buttons */
+.button {
+  width: 75px;
+  height: 75px;
+  border: 7px solid rgb(37, 37, 37);
+  border-radius: 50%;
+  box-shadow: 5px -5px 30px 0px rgba(0,0,0,0.5) inset,
+              -3px 3px 15px 0px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: rgb(43,43,43);
+}
+
+.button:active {
+  background-color: rgb(55,55,55);
+}
+
+.submit-btn {
+  background: url(./images/submit.png) no-repeat;
+  background-size: 70% 70%;
+  background-position: center;
+  border-width: 3px;
+  border-radius: 10%;
+  width: 50px;
+  height: 46px;
+  margin: -5px 0 0 32px;
+}
+
+.sound-btn-container {
+  position: absolute;
+  left: -5%;
+  top: 88%;
+}
+
+.sound-btn {
+  background: url(./images/sound_on.png) no-repeat;
+  background-size: 70% 70%;
+  background-position: center;
+}
+
+.reset-btn-container {
+  position: absolute;
+  left: 86%;
+  top: 88%;
+}
+
+.reset-btn {
+  background: url(./images/reset.png) no-repeat;
+  background-size: 70% 70%;
+  background-position: center;
+}
